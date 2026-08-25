@@ -103,6 +103,9 @@ export default defineComponent({
         }
       ]
     })
+    const changelogPathRef = computed(() => {
+      return `${themeAndLocaleReg.exec(route.path)[0]}/docs/changelog`
+    })
     const menuValueRef = computed(() => {
       if (/\/docs\//.test(route.path))
         return 'doc'
@@ -298,6 +301,7 @@ export default defineComponent({
       message,
       t,
       version,
+      changelogPath: changelogPathRef,
       isMobile: isMobileRef,
       isTablet: isTabletRef,
       repoUrl,
@@ -436,9 +440,18 @@ export default defineComponent({
       >
         GitHub
       </n-button>
-      <n-text class="nav-picker padded">
-        {{ version }}
-      </n-text>
+      <router-link v-slot="{ href, navigate }" :to="changelogPath" custom>
+        <n-button
+          size="small"
+          tag="a"
+          quaternary
+          class="nav-picker"
+          :href="href"
+          @click="navigate"
+        >
+          {{ version }}
+        </n-button>
+      </router-link>
       <n-button
         v-if="dev"
         size="small"
@@ -491,10 +504,6 @@ export default defineComponent({
 
 .nav-picker {
   margin-right: 4px;
-}
-
-.nav-picker.padded {
-  padding: 0 10px;
 }
 
 .nav-picker:last-child {
