@@ -1,5 +1,5 @@
 import { locators, page } from 'vitest/browser'
-import { createApp, defineComponent, nextTick, ref } from 'vue'
+import { createApp, defineComponent, h, nextTick, ref } from 'vue'
 import { NPagination } from '../index'
 
 declare module 'vitest/browser' {
